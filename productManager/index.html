@@ -11,9 +11,14 @@
                     <h4 class="blog-post-title ng-scope">Products</h4>
                     <div class="right"><button class = "btn btn-group-sm btn-primary">Add New Product</button></div>
                 </div>
-                
-                    <search-filter></search-filter>
-                    <products-list></products-list>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <search-filter></search-filter>
+                    </div>
+                    <div class="panel-body" ng-controller="productsController as scope">
+                        <products-list></products-list>
+                    </div>
+                </div>
             </div>    
         </div>
         <script src="js/angular.min.js" type="text/javascript"></script>
