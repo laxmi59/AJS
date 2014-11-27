@@ -1,0 +1,22 @@
+<html ng-init="init()">
+    <head>
+        <title>Angular Practice</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    </head>    
+    <body ng-app="app">
+        <div class="container">
+            
+            <div class="table-responsive">
+                <div class="panel-heading">
+                    <h4 class="blog-post-title ng-scope">Products</h4>
+                    <div class="right"><button class = "btn btn-group-sm btn-primary">Add New Product</button></div>
+                </div>
+                
+                    <search-filter></search-filter>
+                    <products-list></products-list>
+            </div>    
+        </div>
+        <script src="js/angular.min.js" type="text/javascript"></script>
+        <script src="js/app.js" type="text/javascript"></script>
+    </body>
+</html>

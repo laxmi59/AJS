@@ -1,0 +1,30 @@
+<div class="panel panel-primary">
+<div class="panel-body" ng-controller="productsController as scope">
+    <table class="table table-striped">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Packing</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th colspan="2">Action</th>
+        </tr>
+        <tr ng-repeat="product in scope.products | filter: filter.name">
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.stock }}</td>
+            <td>{{ product.packing }}</td>
+            <td>{{ product.description }}</td>
+            <td>
+                <button ng-if="product.status == 'Active'" class = "btn btn-xs btn-success">{{ product.status }}</button>
+                <button ng-if="product.status != 'Active'" class = "btn btn-xs btn-default">{{ product.status }}</button>
+            </td>
+            <td><button class="btn btn-xs btn-primary">Edit</button></td>
+            <td><button class="btn btn-xs btn-danger">Delete</button></td>
+        </tr>
+    </table>
+</div>
+</div>
