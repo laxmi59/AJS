@@ -29,15 +29,44 @@ if($_GET['act'] == 'statusUpdate'){
 
 if($_GET['act'] == 'insertProduct'){
     $errorsArr = array();
-    if($_REQUEST['productName'] == "undefined")
+    if($_REQUEST['name'] == "undefined")
         $errorsArr[] = "Name Required";    
     
-    if($_REQUEST['productPrice'] == "undefined")
+    if($_REQUEST['name'] == "undefined")
         $errorsArr[] = "Price Required"; 
     
     if($errorsArr)
         print_r($errorsArr);
-    else
-        echo "success";
+    else{
+        $query = "insert into products (`name`, `price`, `description`, `packing`, `stock`, `status`) values ('".$_REQUEST['name']."',". $_REQUEST['price'].",'".$_REQUEST['description']."','". $_REQUEST['packing']."',".$_REQUEST['stock'].",'".$_REQUEST['status']. "')";
+        mysql_query($query);
+        echo "Product Inserted";
+    }
+}
+if($_GET['act'] == 'getSingleRecord'){    
+    $sql = "SELECT `id` , `name` , `price` , `description` , `packing` , `stock` , `status` FROM `products` where id=".$_REQUEST['pid'];
+    $query = mysql_query($sql);                
+    //$row = array();
+    $row = mysql_fetch_assoc($query);
+       // $row[] = $r;    
+    echo json_encode($row);    
+}
+
+if($_GET['act'] == 'updateProduct'){
+    //print_r($_POST);
+    $errorsArr = array();
+    if($_REQUEST['name'] == "undefined")
+        $errorsArr[] = "Name Required";    
+    
+    if($_REQUEST['name'] == "undefined")
+        $errorsArr[] = "Price Required"; 
+    
+    if($errorsArr)
+        print_r($errorsArr);
+    else{
+        $query = "update products  set `name` = '".$_REQUEST['name']."', `price` = ". $_REQUEST['price'].", `description` = '".$_REQUEST['description']."', `packing` = '". $_REQUEST['packing']."', `stock` = ".$_REQUEST['stock'].", `status` = '".$_REQUEST['status']. "' where id = ".$_REQUEST['pid'];
+        mysql_query($query);
+        echo "Product updated";
+    }
 }
 ?>

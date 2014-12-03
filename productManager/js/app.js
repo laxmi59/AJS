@@ -15,15 +15,30 @@
             });
         };        
         $scope.modalShown = false;
-        $scope.toggleModal = function() {      
-           $scope.modalShown = !$scope.modalShown;
+        $scope.toggleModal = function(pid) {      
+            if(pid != ""){
+                $scope.editData = [];
+                $http.get("data/dataFunctions.php?act=getSingleRecord&pid="+pid).success(function(data){
+                   $scope.name = data['name'];
+                   $scope.description = data['description'];
+                   $scope.price = data['price'];
+                   $scope.stock = data['stock'];
+                   $scope.packing = data['packing'];
+                   $scope.pid = data['id'];
+                });
+            }
+            $scope.modalShown = !$scope.modalShown;
         };
         // Product Insertion
         $scope.errors = [{errors: "test"}, {errors: "test1"}];
-        $scope.insertProduct = function(){ 
+        $scope.addorEditProduct = function(){ 
+            if(this.pid != "")
+                url = "data/dataFunctions.php?act=updateProduct";
+            else
+                url = "data/dataFunctions.php?act=insertProduct";
             $http({
                 method: 'POST',
-                url: "data/dataFunctions.php?act=insertProduct",
+                url: url,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 transformRequest: function(obj) {
                     var str = [];
@@ -31,12 +46,24 @@
                     str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
                     return str.join("&");
                 },
-                data: {productName: this.productName, productPrice: this.productPrice}
+                data: {
+                    pid: this.pid,
+                    name: this.name, 
+                    description: this.description, 
+                    price: this.price, 
+                    stock: this.stock,
+                    packing: this.packing,
+                    status: 'Active'
+                }
             }).success(function (data) {
                 alert(data);
-                $scope.errors = data;
+                $scope.modalShown = false;
+                $scope.init();
             });
         };
+        $scope.hideModalCancel = function(){
+            $scope.modalShown = false;
+        }
     }]);
     app.directive('modalDialog', function() { 
         return {
