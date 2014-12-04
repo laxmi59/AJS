@@ -38,7 +38,7 @@ function showAllProducts(){
 }
 
 function addProduct(){
-    $query = "insert into products (name, price, description, packing, stock, status) values ('".$_REQUEST['name']."',". $_REQUEST['price'].",'".$_REQUEST['description']."','". $_REQUEST['packing']."',".$_REQUEST['stock'].",'".$_REQUEST['status']. "')";
+    $query = "insert into products (name, price, description, packing, stock, status) values ('".$_REQUEST['name']."',". $_REQUEST['price'].",'".$_REQUEST['description']."','". $_REQUEST['packing']."',".$_REQUEST['stock'].",'Active')";
     if(mysql_query($query)){
         echo "Product Inserted";
     }else{

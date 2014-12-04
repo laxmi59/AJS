@@ -23,17 +23,15 @@
                 });
             }else{
                 $scope.formFields = $scope.emptyFormFields;
-                //$scope.formFields.addClass("form-control ng-valid");
             } 
             $scope.modalShown = !$scope.modalShown;
         };
         // Product Insertion        
-        $scope.addorEditProduct = function(){  
-            //alert(JSON.stringify($scope.formFields));
-            if(this.id != "undefined")
-                url = "data/dataFunctions.php?act=updateProduct";
-            else
+        $scope.addorEditProduct = function(){              
+            if(isNaN($scope.formFields.id))
                 url = "data/dataFunctions.php?act=addProduct";
+            else
+                url = "data/dataFunctions.php?act=updateProduct";
             $http({
                 method: 'POST',
                 url: url,
@@ -47,12 +45,14 @@
                 data: $scope.formFields
             }).success(function (data) {
                 alert(data);
-                //document.getElementById("addProductForm").reset();
+
+                document.getElementById("addProductForm").reset();
                 $scope.modalShown = false; 
                 $scope.init();
             });
         };
         $scope.hideModalCancel = function(){
+            document.getElementById("addProductForm").reset();
             $scope.modalShown = false;
         }  
         // change status
