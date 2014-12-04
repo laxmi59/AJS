@@ -3,26 +3,26 @@
     <div class="modal-body">
         <div>{{$scope.productData}}</div>
         <form class="form-horizontal" name="addProductForm" id="addProductForm" ng-submit="addorEditProduct()">
-            <input type="hidden" ng-model="id" name="id"/>
+            <input type="hidden" ng-model="formFields.id" name="formFields.id"/>
             <div class="form-group">
                 <label class="col-sm-2 control-label">NAME</label>
-                <div class="col-sm-10"><input type="text" name="name" ng-model="name" placeholder="Enter Product Name" class="form-control ng-valid" required/></div>
+                <div class="col-sm-10"><input type="text" name="formFields.name" ng-model="formFields.name" placeholder="Enter Product Name" class="form-control ng-valid" required/></div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">DESCRIPTION</label>
-                <div class="col-sm-10"><textarea name="description" ng-model="description" placeholder="Enter Product Description" class="form-control ng-valid" required></textarea></div>
+                <div class="col-sm-10"><textarea name="formFields.description" ng-model="formFields.description" placeholder="Enter Product Description" class="form-control ng-valid" required></textarea></div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">PRICE</label>
-                <div class="col-sm-10"><input type="text" name="price" ng-model="price" placeholder="Enter Product Price" class="form-control ng-valid" required/></div>
+                <div class="col-sm-10"><input type="text" name="formFields.price" ng-model="formFields.price" placeholder="Enter Product Price" class="form-control ng-valid" required/></div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">STOCK</label>
-                <div class="col-sm-10"><input type="text" name="stock" ng-model="stock" placeholder="Enter Product Stock" class="form-control ng-valid" required/></div>
+                <div class="col-sm-10"><input type="text" name="formFields.stock" ng-model="formFields.stock" placeholder="Enter Product Stock" class="form-control ng-valid" required/></div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">PACKING</label>
-                <div class="col-sm-10"><input type="text" name="packing" ng-model="packing" placeholder="Enter Product Packing" class="form-control ng-valid" required/></div>            
+                <div class="col-sm-10"><input type="text" name="formFields.packing" ng-model="formFields.packing" placeholder="Enter Product Packing" class="form-control ng-valid" required/></div>            
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">

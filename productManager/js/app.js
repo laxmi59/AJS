@@ -10,8 +10,8 @@
             });
         };
         $scope.init();    
-        //var formFields = [{"id": null,"name": null,"description": null, "price": null,"stock": null,"packing": null}];
-        
+        $scope.formFields =[]
+        $scope.emptyFormFields = [{"id": null,"name": null,"description": null, "price": null,"stock": null,"packing": null}];
         
         // Add or Edit Popup
         $scope.modalShown = false;
@@ -19,19 +19,17 @@
             if(id != "0"){                
                 $http.get("data/dataFunctions.php?act=getSingleProduct&id="+id).success(function(data){
                     //alert(data[0]["id"]);
-                    $scope.name = data[0]['name'];
-                    $scope.description = data[0]['description'];
-                    $scope.price = data[0]['price'];
-                    $scope.stock = data[0]['stock'];
-                    $scope.packing = data[0]['packing'];
-                    $scope.id = data[0]['id'];
+                    $scope.formFields = data[0];                    
                 });
+            }else{
+                $scope.formFields = $scope.emptyFormFields;
+                //$scope.formFields.addClass("form-control ng-valid");
             } 
             $scope.modalShown = !$scope.modalShown;
         };
-        // Product Insertion
-        $scope.errors = [{errors: "test"}, {errors: "test1"}];
-        $scope.addorEditProduct = function(){                 
+        // Product Insertion        
+        $scope.addorEditProduct = function(){  
+            //alert(JSON.stringify($scope.formFields));
             if(this.id != "undefined")
                 url = "data/dataFunctions.php?act=updateProduct";
             else
@@ -46,18 +44,10 @@
                     str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
                     return str.join("&");
                 },
-                data: {
-                    id: this.id,
-                    name: this.name, 
-                    description: this.description, 
-                    price: this.price, 
-                    stock: this.stock,
-                    packing: this.packing,
-                    status: 'Active'
-                }
+                data: $scope.formFields
             }).success(function (data) {
                 alert(data);
-                document.getElementById("addProductForm").reset();
+                //document.getElementById("addProductForm").reset();
                 $scope.modalShown = false; 
                 $scope.init();
             });

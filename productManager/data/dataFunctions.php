@@ -38,43 +38,21 @@ function showAllProducts(){
 }
 
 function addProduct(){
-    $errorsArr = array();
-    if($_REQUEST['name'] == "undefined")
-        $errorsArr[] = "Name Required";    
-    
-    if($_REQUEST['name'] == "undefined")
-        $errorsArr[] = "Price Required"; 
-    
-    if($errorsArr)
-        print_r($errorsArr);
-    else{
-        $query = "insert into products (`name`, `price`, `description`, `packing`, `stock`, `status`) values ('".$_REQUEST['name']."',". $_REQUEST['price'].",'".$_REQUEST['description']."','". $_REQUEST['packing']."',".$_REQUEST['stock'].",'".$_REQUEST['status']. "')";
-        if(mysql_query($query)){
-            echo "Product Inserted";
-        }else{
-            echo "Some thing wrong with product insertion";
-        }
-    }
+    $query = "insert into products (name, price, description, packing, stock, status) values ('".$_REQUEST['name']."',". $_REQUEST['price'].",'".$_REQUEST['description']."','". $_REQUEST['packing']."',".$_REQUEST['stock'].",'".$_REQUEST['status']. "')";
+    if(mysql_query($query)){
+        echo "Product Inserted";
+    }else{
+        echo "Some thing wrong with product insertion";
+    }   
 }
 
-function updateProduct(){
-    //print_r($_POST);
-    $errorsArr = array();
-    if($_REQUEST['name'] == "undefined")
-        $errorsArr[] = "Name Required";    
-    
-    if($_REQUEST['name'] == "undefined")
-        $errorsArr[] = "Price Required"; 
-    
-    if($errorsArr)
-        print_r($errorsArr);
-    else{
-        $query = "update products  set `name` = '".$_REQUEST['name']."', `price` = ". $_REQUEST['price'].", `description` = '".$_REQUEST['description']."', `packing` = '". $_REQUEST['packing']."', `stock` = ".$_REQUEST['stock'].", `status` = '".$_REQUEST['status']. "' where id = ".$_REQUEST['id'];
-        if(mysql_query($query)){
-            echo "Product updated";
-        }else{
-            echo "Some thing wrong with product Updation";
-        }
+function updateProduct(){    
+    //print_r($_REQUEST);exit;
+    $query = "update products  set name= '".$_REQUEST['name']."', price= ". $_REQUEST['price'].", description= '".$_REQUEST['description']."', packing= '". $_REQUEST['packing']."', stock= ".$_REQUEST['stock'].", status= '".$_REQUEST['status']. "' where id = ".$_REQUEST['id'];
+    if(mysql_query($query)){
+        echo "Product updated";
+    }else{
+        echo "Some thing wrong with product Updation";
     }
 }
 function deleteProduct(){
