@@ -5,11 +5,11 @@
         <link href="css/styles.css" rel="stylesheet" type="text/css">
     </head>    
     <body ng-app="app">
-        <div class="container" ng-controller="productsController">    
+        <div class="container" ng-controller="productsController as productCtrl">    
             <div class="table-responsive">
                 <div class="panel-heading">
                     <h4 class="blog-post-title ng-scope">Products</h4>
-                    <div class="right"><button class = "btn btn-group-sm btn-primary" ng-click="toggleModal()">Add New Product</button></div>
+                    <div class="right"><button class = "btn btn-group-sm btn-primary" ng-click="toggleModal('0')">Add New Product</button></div>
                 </div>
                 <div class="panel panel-primary">
                     <div class="panel-heading">

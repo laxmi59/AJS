@@ -1,41 +1,41 @@
 
 (function(){
      var app = angular.module('app',[]);
-     app.controller('productsController',["$http","$scope", function($http, $scope){        
+     app.controller('productsController',["$http","$scope", function($http, $scope){ 
+        // Get all Products     
         $scope.products = [];
         $scope.init = function(){            
-            $http.get("data/dataFunctions.php?act=all").success(function(data){
+            $http.get("data/dataFunctions.php?act=showAllProducts").success(function(data){
                 $scope.products = data;
             });
         };
-        $scope.init();
-        $scope.changeStatus = function(pid){
-           $http.get("data/dataFunctions.php?act=statusUpdate&pid="+pid).success(function(data){
-               $scope.init();
-            });
-        };        
+        $scope.init();    
+        //var formFields = [{"id": null,"name": null,"description": null, "price": null,"stock": null,"packing": null}];
+        
+        
+        // Add or Edit Popup
         $scope.modalShown = false;
-        $scope.toggleModal = function(pid) {      
-            if(pid != ""){
-                $scope.editData = [];
-                $http.get("data/dataFunctions.php?act=getSingleRecord&pid="+pid).success(function(data){
-                   $scope.name = data['name'];
-                   $scope.description = data['description'];
-                   $scope.price = data['price'];
-                   $scope.stock = data['stock'];
-                   $scope.packing = data['packing'];
-                   $scope.pid = data['id'];
+        $scope.toggleModal = function(id) {               
+            if(id != "0"){                
+                $http.get("data/dataFunctions.php?act=getSingleProduct&id="+id).success(function(data){
+                    //alert(data[0]["id"]);
+                    $scope.name = data[0]['name'];
+                    $scope.description = data[0]['description'];
+                    $scope.price = data[0]['price'];
+                    $scope.stock = data[0]['stock'];
+                    $scope.packing = data[0]['packing'];
+                    $scope.id = data[0]['id'];
                 });
-            }
+            } 
             $scope.modalShown = !$scope.modalShown;
         };
         // Product Insertion
         $scope.errors = [{errors: "test"}, {errors: "test1"}];
-        $scope.addorEditProduct = function(){ 
-            if(this.pid != "")
+        $scope.addorEditProduct = function(){                 
+            if(this.id != "undefined")
                 url = "data/dataFunctions.php?act=updateProduct";
             else
-                url = "data/dataFunctions.php?act=insertProduct";
+                url = "data/dataFunctions.php?act=addProduct";
             $http({
                 method: 'POST',
                 url: url,
@@ -47,7 +47,7 @@
                     return str.join("&");
                 },
                 data: {
-                    pid: this.pid,
+                    id: this.id,
                     name: this.name, 
                     description: this.description, 
                     price: this.price, 
@@ -57,14 +57,29 @@
                 }
             }).success(function (data) {
                 alert(data);
-                $scope.modalShown = false;
+                document.getElementById("addProductForm").reset();
+                $scope.modalShown = false; 
                 $scope.init();
             });
         };
         $scope.hideModalCancel = function(){
             $scope.modalShown = false;
-        }
+        }  
+        // change status
+        $scope.changeStatus = function(id){
+           $http.get("data/dataFunctions.php?act=statusUpdate&id="+id).success(function(data){
+               $scope.init();
+            });
+        };  
+        // Delete Product
+        $scope.deleteProduct = function(id){
+           $http.get("data/dataFunctions.php?act=deleteProduct&id="+id).success(function(data){
+               alert(data);
+               $scope.init();
+            });
+        };  
     }]);
+
     app.directive('modalDialog', function() { 
         return {
         restrict: 'E',
@@ -86,29 +101,15 @@
         template: "<div class='ng-modal' ng-show='show'><div class='ng-modal-overlay' ng-click='hideModal()'></div><div class='ng-modal-dialog' ng-style='dialogStyle'><div class='ng-modal-close' ng-click='hideModal()'>X</div><div class='ng-modal-dialog-content' ng-transclude></div></div></div>"    
         };
     });
-  // Add product directive
+    
+    // Add product directive
     app.directive('addProducts', function(){
         return{
             restrict: 'E',
             templateUrl: "partials/addProduct.html"
         }
     });
-  /*  var app = angular.module('app',[]);
-    app.controller('productsController',["$http","$scope", function($http, $scope){        
-        $scope.products = [];
-        $scope.init = function(){            
-            $http.get("data/dataFunctions.php?act=all").success(function(data){
-                $scope.products = data;
-            });
-        };
-        $scope.init();
-        $scope.changeStatus = function(pid){
-           $http.get("data/dataFunctions.php?act=statusUpdate&pid="+pid).success(function(data){
-               $scope.init();
-            });
-        };      
-        
-    }]);  */
+    
     // product list directive
     app.directive('productsList', function(){
         return{

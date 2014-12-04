@@ -21,6 +21,6 @@
                 <button ng-if="product.status != 'Active'" class = "btn btn-xs btn-default" ng-click="changeStatus(product.id)">{{ product.status }}</button>
             </td>
             <td><button class="btn btn-xs btn-primary" ng-click="toggleModal(product.id)">Edit</button></td>
-            <td><button class="btn btn-xs btn-danger">Delete</button></td>
+            <td><button class="btn btn-xs btn-danger" ng-click="deleteProduct(product.id)">Delete</button></td>
         </tr>
     </table>
